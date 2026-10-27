@@ -40,6 +40,11 @@ source = path.read_text()
 old = 'setup-oran.sh setup-xapp-nexran.sh'
 assert source.count(old) == 1
 path.write_text(source.replace(old, 'setup-oran.sh'))
+# This assessment keeps completion receipts private; do not send upstream email.
+source = path.read_text()
+old = 'HEADNODESCRIPTS="${HEADNODESCRIPTS} setup-end.sh"'
+assert source.count(old) == 1
+path.write_text(source.replace(old, '# Completion is recorded privately by the bounded assessment wrapper.'))
 # Same published OID compatibility normalization applied by the POWDER checkout service.
 path = root/'test-common.py'
 source = path.read_text()
