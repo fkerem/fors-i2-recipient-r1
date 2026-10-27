@@ -5,7 +5,7 @@ Compute-only preparation for a bounded recipient-isolation assessment: three d43
 ## Import and initiate manually
 
 1. In POWDER, create a repository-backed profile in project **oransec** using `https://github.com/fkerem/fors-i2-recipient-r1.git`.
-2. Select tag **profile-r3** and keep all reviewed parameter defaults unchanged.
+2. Select tag **profile-r4** and keep all reviewed parameter defaults unchanged.
 3. Instantiate **i2-recipient-r1** and request 48 hours, subject to current admission and lease availability.
 4. Wait for all three startup services to show **Finished**. Return the status URL, UUID, three SSH hosts and current displayed expiration to the operator.
 
@@ -21,4 +21,6 @@ The profile wrapper is MIT licensed. Downloaded upstream software retains its ow
 
 The bootstrap is a separate `bootstrap.sh` file invoked by a simple command. This avoids nested multiline shell quoting in the platform-generated wrapper. The original profile-r1 tag is preserved. An existing failed allocation must follow its separately recorded recovery; changing the profile does not restart or repair existing nodes. The bootstrap refuses an existing setup directory, preserved checkout or Kubernetes admin configuration. No E2 peer, receiver or security test starts automatically.
 
-The profile-r3 follow-up also omits the upstream completion-email script. Native recovery uses private completion receipts; it does not send logs or credentials by email. No infrastructure attempt was run between the profile-r2 and profile-r3 source releases.
+The profile-r4 follow-up also omits the upstream completion-email script. Native recovery uses private completion receipts; it does not send logs or credentials by email. No infrastructure attempt was run between the profile-r2 and profile-r4 source releases.
+
+Both upstream email hooks (Kubernetes progress and completion) are suppressed. No setup or evidence email is sent by this profile.

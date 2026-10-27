@@ -45,6 +45,14 @@ source = path.read_text()
 old = 'HEADNODESCRIPTS="${HEADNODESCRIPTS} setup-end.sh"'
 assert source.count(old) == 1
 path.write_text(source.replace(old, '# Completion is recorded privately by the bounded assessment wrapper.'))
+# The Kubernetes installer has a separate progress-email hook.
+path = root/'setup-kubespray.sh'
+source = path.read_text()
+old = ('echo "Your ${EXPTTYPE} instance is setting up on $NFQDN ." '
+       + chr(92) + chr(10)
+       + '    |  mail -s "${EXPTTYPE} Instance Setting Up" ${SWAPPER_EMAIL} &')
+assert source.count(old) == 1
+path.write_text(source.replace(old, '# Progress is recorded privately; no setup email.'))
 # Same published OID compatibility normalization applied by the POWDER checkout service.
 path = root/'test-common.py'
 source = path.read_text()
@@ -53,6 +61,6 @@ source = source.replace('2.25.305821105408246119474742976030998643995',
 path.write_text(source)
 PY
 chown -R "$task_user" /local/repository
-git -C /local/repository diff -- setup-oran.sh setup-driver.sh test-common.py > /local/setup/i2-infrastructure.patch
+git -C /local/repository diff -- setup-oran.sh setup-driver.sh setup-kubespray.sh test-common.py > /local/setup/i2-infrastructure.patch
 timeout --signal=TERM --kill-after=30 14400 sudo -u "$task_user" -H /bin/bash -c \
   '/local/repository/setup-driver.sh > /local/logs/setup.log 2>&1'
