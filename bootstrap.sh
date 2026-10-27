@@ -52,7 +52,11 @@ old = ('echo "Your ${EXPTTYPE} instance is setting up on $NFQDN ." '
        + chr(92) + chr(10)
        + '    |  mail -s "${EXPTTYPE} Instance Setting Up" ${SWAPPER_EMAIL} &')
 assert source.count(old) == 1
-path.write_text(source.replace(old, '# Progress is recorded privately; no setup email.'))
+source = source.replace(old, '# Progress is recorded privately; no setup email.')
+# Kubespray 2.30 checksum keys and its Ansible version filter omit the v prefix.
+old = 'kube_version: ${KUBEVERSION}'
+assert source.count(old) == 1
+path.write_text(source.replace(old, 'kube_version: ${KUBEVERSION#v}'))
 # Same published OID compatibility normalization applied by the POWDER checkout service.
 path = root/'test-common.py'
 source = path.read_text()
