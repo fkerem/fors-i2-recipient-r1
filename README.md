@@ -5,7 +5,7 @@ Compute-only preparation for a bounded recipient-isolation assessment: three d43
 ## Import and initiate manually
 
 1. In POWDER, create a repository-backed profile in project **oransec** using `https://github.com/fkerem/fors-i2-recipient-r1.git`.
-2. Select tag **profile-r1** and keep all reviewed parameter defaults unchanged.
+2. Select tag **profile-r2** and keep all reviewed parameter defaults unchanged.
 3. Instantiate **i2-recipient-r1** and request 48 hours, subject to current admission and lease availability.
 4. Wait for all three startup services to show **Finished**. Return the status URL, UUID, three SSH hosts and current displayed expiration to the operator.
 
@@ -16,3 +16,7 @@ Startup preserves POWDER's profile checkout at `/local/i2-profile-repository` an
 Stop on an admission or startup failure and return the exact error; do not replay infrastructure setup or force completion. Keep setup logs, generated passwords and Kubernetes credentials private. This repository contains only the profile, these instructions and its license.
 
 The profile wrapper is MIT licensed. Downloaded upstream software retains its own licenses. No vulnerability result or universal isolation claim is made by this profile.
+
+## Startup correction in profile-r2
+
+The bootstrap is a separate `bootstrap.sh` file invoked by a simple command. This avoids nested multiline shell quoting in the platform-generated wrapper. The original profile-r1 tag is preserved. An existing failed allocation must follow its separately recorded recovery; changing the profile does not restart or repair existing nodes. The bootstrap refuses an existing setup directory, preserved checkout or Kubernetes admin configuration. No E2 peer, receiver or security test starts automatically.
